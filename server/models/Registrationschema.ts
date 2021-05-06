@@ -5,7 +5,7 @@ import mongoose, { Schema, Document } from "mongoose";
     last_name: string;
     age:Number;
     email:string;
-    phoneno: Number;
+    phoneno: string;
     address:string;
     distt:string;
     state:string;
@@ -27,7 +27,7 @@ age:{type:Number,
 email:{type:String,
     required:true
 },
-phoneno:{type:Number,
+phoneno:{type:String,
     required:true
 },
 address:{type:String,
