@@ -72,12 +72,14 @@ body{margin:0}.page-content{width:100%;margin:0 auto;background:#75e2e9;display:
     margin-top: -20px;
     margin-bottom: 30px;
 }
+#district{width: 250px;}
 @media screen and (max-width:700px){
   .form-v10-content{
       flex-wrap: wrap;
       width: 80%;
   } 
   .form-detail{width: 100%;}
+  #district{width: 100%;}
 
   /* .form-row .spa{margin-left: 80%;}
   .form-row .spa1{margin-left: 80%;} */
@@ -108,9 +110,10 @@ body{
   background: #75e2e9;
 }
 #head{
+
   margin: auto;
-  margin-top: 20px;
-  width: 95%;
+  margin-top: -40px;
+  width: 85%;
 }
 
 #input{
@@ -219,3 +222,4 @@ animation: spin 2s linear infinite;
   top: 0;
   width: 100%;
   z-index: 200;}
+
