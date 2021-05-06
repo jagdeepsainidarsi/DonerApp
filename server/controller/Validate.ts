@@ -41,15 +41,10 @@
       
         }
           }
-      if(distt||!state||!address||coronanegative||!coronapositive){
-        var letters = /^[A-Za-z]+$/;
-        if(!distt.match(letters)||!state.match(letters))
-        {
-       
-        console.log("not match")
-        isValid=false;
-      }
-        }
+          if(!state||!distt){
+            console.log("chosse dist and state")
+            isValid=false;
+          }
       return isValid;
   }
   
