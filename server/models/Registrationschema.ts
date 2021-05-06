@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
- interface Donor extends Document {
+ export interface Donor extends Document {
     first_name: string;
     last_name: string;
     age:Number;
@@ -54,8 +54,8 @@ gender:{type:String,
 })
 
 
-const Registration_model=mongoose.model("REGISTRATIONSCHEMA",registrationSchema);
-module.exports=Registration_model;
+// const Registration_model=mongoose.model("REGISTRATIONSCHEMA",registrationSchema);
+// module.exports=Registration_model;
 // export default mongoose.model<JD>("REGISTRATIONSCHEMA",registrationSchema)
-// const Registration_model = mongoose.model<Donor>("donors", registrationSchema);
-// export default Registration_model;
+const Registration_model = mongoose.model<Donor>("REGISTRATIONSCHEMA", registrationSchema);
+module.exports= Registration_model;
