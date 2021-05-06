@@ -27,10 +27,8 @@ function Registration() {
       phoneno:"",
       distt:"",
       state:"",
-      country:"",
       coronapositive:"",
       coronanegative:"",
-      select:"",
       gender:""
 
 
@@ -90,14 +88,14 @@ const getdata=async()=>{
 const submitdata=async()=>{
 if(validate()){
   console.log(aname.email)
-  const {first_name,last_name,age,email,address,phoneno,distt,state,country,coronapositive,coronanegative,gender}=aname;
+  const {first_name,last_name,age,email,address,phoneno,distt,state,coronapositive,coronanegative,gender}=aname;
 
   console.log("datasent");
   const res=await fetch("/registerdoner",{method:"POST",
         headers:{
             "content-Type":"application/json"
         },
-        body:JSON.stringify({first_name,last_name,age,email,address,phoneno,distt,state,country,coronapositive,coronanegative,gender})})
+        body:JSON.stringify({first_name,last_name,age,email,address,phoneno,distt,state,coronapositive,coronanegative,gender})})
         const data=await res.json();
         console.log(data);
         if(res.status===400){
@@ -122,7 +120,6 @@ if(validate()){
   phoneno:"",
   distt:"",
   state:"",
-  country:"",
   gender:"",
   coronapositive:"",
   coronanegative:""})
@@ -182,9 +179,9 @@ const validate=()=>{
       }else{ucancelicon1(false)
           uicon1(true)}
         }
-    if(!aname.distt||!aname.state||!aname.country||!aname.address||aname.coronanegative||!aname.coronapositive){
+    if(!aname.distt||!aname.state||!aname.address||aname.coronanegative||!aname.coronapositive){
       var letters = /^[A-Za-z]+$/;
-      if(!aname.distt.match(letters)||!aname.state.match(letters)||!aname.country.match(letters))
+      if(!aname.distt.match(letters)||!aname.state.match(letters))
       {
       uerror1(true);
       uerror2("Fill in letters")
@@ -201,15 +198,16 @@ const validate=()=>{
    <>
    <div>
   <Nabvar/>
-   <Link style={{textDecoration:"none"}} to="search"> <Button style={{margin:"10px",marginTop:"70px"}} variant="contained">Search Doner</Button></Link>
- 
-   
-   <div className="page-content">
+   <Link style={{textDecoration:"none"}} to="search">
+   <Button style={{margin:"10px",marginTop:"70px"}}
+    variant="contained">Search Doner
+    </Button>
+   </Link>
+ <div className="page-content">
    <div className="form-v10-content" >
      <form className="form-detail"  onSubmit={onsubmit}>
        <div className="form-left">
-       
-         <h2 style={{textAlign:"center"}}>Register For Plasma Doner</h2>
+       <h2 style={{textAlign:"center"}}>Register For Plasma Doner</h2>
          {error1?<div class="error-msg">
 		<i className="fa fa-times-circle"></i>
 		{error2}
@@ -221,37 +219,97 @@ const validate=()=>{
    
          <div className="form-group">
            <div className="form-row form-row-1">   
-             <input type="text" name="first_name" id="first_name" className="input-text" placeholder="First Name" required="" onChange={input} value={aname.first_name}/>
+             <input type="text"
+              name="first_name"
+              id="first_name" 
+              className="input-text" 
+              placeholder="First Name" 
+              required="" 
+              onChange={input} 
+              value={aname.first_name}/>
            </div>
            <div className="form-row form-row-2">
-             <input type="text" name="last_name" id="last_name" className="input-text" placeholder="Last Name" required="" onChange={input} value={aname.last_name}/>
+             <input type="text" 
+             name="last_name" 
+             id="last_name" 
+             className="input-text" 
+             placeholder="Last Name" 
+             required="" 
+             onChange={input} 
+             value={aname.last_name}/>
            </div>
          </div>
         
        <div className="form-row">
-       <input type="number" name="age" id="first_name" className="input-text" placeholder="Age" required="" onChange={input} value={aname.age}/>
+       <input type="number"
+        name="age" 
+        id="first_name" 
+        className="input-text" 
+        placeholder="Age" 
+        required="" 
+        onChange={input} 
+        value={aname.age}/>
      </div>
          
          <div className="form-row">
-           <input style={{paddingRight:"15%"}} type="text" name="email" className="company" id="company" placeholder="Email" required="" autoComplete="off" onChange={input} value={aname.email}/>{icon?<span className="spa" ><CheckCircleIcon/></span>:null}{cancelicon?<span className="spa1" ><CancelIcon/></span>:null}
+           <input style={{paddingRight:"15%"}} 
+           type="text" 
+           name="email" 
+           className="company" 
+           id="company" 
+           placeholder="Email" 
+           required="" 
+           autoComplete="off" 
+           onChange={input} 
+           value={aname.email}/>
+           {icon?<span className="spa" ><CheckCircleIcon/></span>:null}
+           {cancelicon?<span className="spa1" ><CancelIcon/></span>:null}
          </div>
          <div className="form-row">
-           <input type="text" name="address" className="company" id="company" placeholder="Address" required="" onChange={input} value={aname.address}/>
+           <input type="text"
+            name="address"
+            className="company" 
+            id="company" 
+            placeholder="Address" 
+            required="" 
+            onChange={input} 
+            value={aname.address}/>
          </div>
-                   <div className="form-row">
-           <input type="text" name="phoneno" className="company" id="company" placeholder="Phone No" required="" onChange={input} value={aname.phoneno}/>{icon1?<span className="spa" ><CheckCircleIcon/></span>:null}{cancelicon1?<span className="spa1" ><CancelIcon/></span>:null}
+        <div className="form-row">
+           <input type="text" 
+           name="phoneno" 
+           className="company" 
+           id="company" 
+           placeholder="Phone No" 
+           required="" 
+           onChange={input} 
+           value={aname.phoneno}/>
+           {icon1?<span className="spa" ><CheckCircleIcon/></span>:null}
+           {cancelicon1?<span className="spa1" ><CancelIcon/></span>:null}
          </div>
-                   <div className="form-group">
-                   <div className="form-row form-row-1">
-                       <input type="text" name="distt" id="first_name" className="input-text" placeholder="Distt" required="" onChange={input} value={aname.distt}/>
-                   </div>
-                   <div className="form-row form-row-2">
-                       <input type="text" name="state" id="last_name" className="input-text" placeholder="State" required="" onChange={input} value={aname.state}/>
-                   </div>
-               </div>
-         <div className="form-row">
-           <input type="text" name="country" className="company" id="company" placeholder="Country" required="" onChange={input} value={aname.country}/>
-         </div>
+        <div className="form-group">
+          <div className="form-row form-row-1">
+            <input type="text" 
+            name="distt" 
+            id="first_name" 
+            className="input-text" 
+            placeholder="Distt" 
+            required="" 
+            onChange={input} 
+            value={aname.distt}/>
+          </div>
+        <div className="form-row form-row-2">
+          <input type="text" 
+          name="state" 
+          id="last_name" 
+          className="input-text" 
+          placeholder="State" 
+          required="" 
+          onChange={input} 
+          value={aname.state}/>
+        </div>
+      </div>
+        
          <div className="form-group">
          <div className="form-row form-row-1">
        
@@ -288,7 +346,14 @@ const validate=()=>{
                       <label style={{paddingTop:"30px"}}> Choose Corona Positive Date</label>
                    </div>
                    <div className="form-row form-row-2">
-                       <input type="date" name="coronapositive" id="last_name" className="input-text" placeholder="Coronanegativedate" required="" onChange={input} value={aname.coronapositive}/>
+                       <input type="date" 
+                       name="coronapositive" 
+                       id="last_name" 
+                       className="input-text" 
+                       placeholder="Coronanegativedate" 
+                       required="" 
+                       onChange={input} 
+                       value={aname.coronapositive}/>
                    </div>
                    
                </div>
@@ -299,13 +364,25 @@ const validate=()=>{
                </div>
               
                <div className="form-row form-row-2">
-                   <input type="date" name="coronanegative" id="last_name" className="input-text" placeholder="Coronanegativedate" required="" onChange={input} value={aname.coronanegative}/>
+                   <input type="date" 
+                   name="coronanegative" 
+                   id="last_name" 
+                   className="input-text" 
+                   placeholder="Coronanegativedate" 
+                   required="" 
+                   onChange={input} 
+                   value={aname.coronanegative}/>
                </div>
                
            </div>
                
                <div className="form-row-last">
-               <input type="submit" id="dd" name="register" className="register" value="Register" onClick={submitdata} />
+               <input type="submit"
+                id="dd" 
+                name="register" 
+                className="register" 
+                value="Register" 
+                onClick={submitdata} />
            </div>
                </div>
               
