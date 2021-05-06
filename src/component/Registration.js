@@ -6,15 +6,20 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { NavLink,Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Nabvar from "./Navbar"
+import indianState from "../IndianStates";
+import districts from "../districts";
 function Registration() {
   const[error1,uerror1]=useState(false);
-	const[error2,uerror2]=useState("");
+  const[error2,uerror2]=useState("");
   const[error3,uerror3]=useState(false);
 	const[error4,uerror4]=useState("");
   const[cancelicon,ucancelicon]=useState(false);
   const[cancelicon1,ucancelicon1]=useState(false);
   const[icon,uicon]=useState(false);
   const[icon1,uicon1]=useState(false);
+  const [state, ustate] = useState("");
+  const [distt, udistt] = useState("");
+  const [dArr, setDArr] = useState([]);
   const[search,usearch]=useState({
     searchvalue:""
   })
@@ -33,17 +38,19 @@ function Registration() {
 
 
 });
-const input1=(event)=>{
-  const {name,value}=event.target;
-  usearch((previousvalue)=>{
-    return{
-      ...previousvalue,
-      [name]:value
-}})
-}
+const disttChange = (e) => {
+  udistt(e.target.value);
+};
+
+const stateChange = (e) => {
+  ustate(e.target.value);
+  let x = districts.states.filter((item) => item.state === e.target.value);
+  setDArr(x[0].districts);
+};
 const input=(event)=>{
  console.log(event.target.value);
   const {name,value}=event.target;
+  
  if(value.length===0){
       uicon(false);
   ucancelicon(false);
@@ -57,6 +64,8 @@ const input=(event)=>{
           ...previousvalue,
           [name]:value
 }})
+console.log(aname.state)
+
 }
 const insubmitform2=(event)=>{
   event.preventDefault();
@@ -88,14 +97,14 @@ const getdata=async()=>{
 const submitdata=async()=>{
 if(validate()){
   console.log(aname.email)
-  const {first_name,last_name,age,email,address,phoneno,distt,state,coronapositive,coronanegative,gender}=aname;
+  const {first_name,last_name,age,email,address,phoneno,coronapositive,coronanegative,gender}=aname;
 
   console.log("datasent");
   const res=await fetch("/registerdoner",{method:"POST",
         headers:{
             "content-Type":"application/json"
         },
-        body:JSON.stringify({first_name,last_name,age,email,address,phoneno,distt,state,coronapositive,coronanegative,gender})})
+        body:JSON.stringify({first_name,last_name,age,email,address,phoneno,coronapositive,coronanegative,gender,state,distt})})
         const data=await res.json();
         console.log(data);
         if(res.status===400){
@@ -118,11 +127,11 @@ if(validate()){
   age:"",
   address:"",
   phoneno:"",
-  distt:"",
-  state:"",
   gender:"",
   coronapositive:"",
   coronanegative:""})
+  ustate("");
+  udistt("");
   uicon(false)
   uicon1(false)
 }
@@ -179,19 +188,11 @@ const validate=()=>{
       }else{ucancelicon1(false)
           uicon1(true)}
         }
-    if(!aname.distt||!aname.state||!aname.address||aname.coronanegative||!aname.coronapositive){
-      var letters = /^[A-Za-z]+$/;
-      if(!aname.distt.match(letters)||!aname.state.match(letters))
-      {
-      uerror1(true);
-      uerror2("Fill in letters")
-      setTimeout(function(){
-        uerror1(false)
-      },2000);
-      console.log("not match")
-      isValid=false;
-    }
-      }
+        if(!state||!distt){
+          console.log("chosse dist and state")
+          isValid=false;
+        }
+  
     return isValid;
 }
   return (
@@ -200,14 +201,14 @@ const validate=()=>{
   <Nabvar/>
    <Link style={{textDecoration:"none"}} to="search">
    <Button style={{margin:"10px",marginTop:"70px"}}
-    variant="contained">Search Doner
+    variant="contained">Search Donor
     </Button>
    </Link>
  <div className="page-content">
    <div className="form-v10-content" >
      <form className="form-detail"  onSubmit={onsubmit}>
        <div className="form-left">
-       <h2 style={{textAlign:"center"}}>Register For Plasma Doner</h2>
+       <h2 style={{textAlign:"center"}}>Register For Plasma Donor</h2>
          {error1?<div class="error-msg">
 		<i className="fa fa-times-circle"></i>
 		{error2}
@@ -240,17 +241,18 @@ const validate=()=>{
            </div>
          </div>
         
-       <div className="form-row">
-       <input type="number"
-        name="age" 
-        id="first_name" 
-        className="input-text" 
-        placeholder="Age" 
-        required="" 
-        onChange={input} 
-        value={aname.age}/>
-     </div>
+         <div className="form-row">
+         <input type="number"
+          name="age" 
+          id="first_name" 
+          className="input-text" 
+          placeholder="Age" 
+          required="" 
+          onChange={input} 
+          value={aname.age}/>
+       </div>
          
+     
          <div className="form-row">
            <input style={{paddingRight:"15%"}} 
            type="text" 
@@ -287,28 +289,7 @@ const validate=()=>{
            {icon1?<span className="spa" ><CheckCircleIcon/></span>:null}
            {cancelicon1?<span className="spa1" ><CancelIcon/></span>:null}
          </div>
-        <div className="form-group">
-          <div className="form-row form-row-1">
-            <input type="text" 
-            name="distt" 
-            id="first_name" 
-            className="input-text" 
-            placeholder="Distt" 
-            required="" 
-            onChange={input} 
-            value={aname.distt}/>
-          </div>
-        <div className="form-row form-row-2">
-          <input type="text" 
-          name="state" 
-          id="last_name" 
-          className="input-text" 
-          placeholder="State" 
-          required="" 
-          onChange={input} 
-          value={aname.state}/>
-        </div>
-      </div>
+      
         
          <div className="form-group">
          <div className="form-row form-row-1">
@@ -339,6 +320,59 @@ const validate=()=>{
          </div>
          
      </div>
+     <div className="form-group">
+     <div className="form-row form-row-1" style={{marginTop:"20px"}}>
+    <label style={{paddingTop:"50px"}}>Please Select State</label>
+     </div>
+   <div className="form-row form-row-2">
+   <select
+   name="state"
+   id="State"
+   className="w-100 p-2"
+   value={state}
+   onChange={stateChange}
+ >
+   <option value="none" id="none" name="none">
+     Please Select
+   </option>
+   ;
+   {indianState.map((item, index) => {
+     return (
+       <option key={index} value={item}>
+         {item}
+       </option>
+     );
+   })}
+ </select>
+   </div>
+ </div>
+     <div className="form-group">
+     <div className="form-row form-row-1" style={{marginTop:"20px"}}>
+    <label style={{paddingTop:"30px"}}>Please Select Distt</label>
+     </div>
+   <div className="form-row form-row-2">
+   <select
+   name="district"
+   id="district"
+   className="w-100 p-2"
+   value={distt}
+   onChange={disttChange}
+ >
+   <option value="none" id="none" name="none">
+     Please Select
+   </option>
+   ;
+   {dArr.map((item, index) => {
+     return (
+       <option key={index} value={item}>
+         {item}
+       </option>
+     );
+   })}
+ </select>
+   </div>
+ </div>
+
     
                    <div className="form-group">
                    <div className="form-row form-row-1" style={{marginTop:"20px"}}>
