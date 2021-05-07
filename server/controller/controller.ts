@@ -35,20 +35,21 @@ export const registerdoner= (req:Request,res:Response,next:NextFunction)=>{
     }
     else{
         console.log("err");
+        res.send("Validation faied");
     }
     
     console.log(req.body,"16")
    
 }
 
-export const Getdoners=(req:Request,res:Response)=>{
-    Register_model.find({},(err:any,data:any)=>{
-        if(err){
-            console.log(err);
-        }
-        else{
-            res.send(data);
-        }
-    })
+export const Getdoners=async (req:Request,res:Response)=>{
+    const user=await Register_model.find({});
+      if(user){
+          res.send(user);
+      }
+      else{
+          res.send("nouser");
+      }
+    
 }
 
